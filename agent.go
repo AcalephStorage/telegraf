@@ -9,8 +9,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/influxdb/influxdb/client"
-	"github.com/influxdb/telegraf/plugins"
+	"github.com/AcalephStorage/influxdb/client"
+	"github.com/AcalephStorage/telegraf/plugins"
 )
 
 type runningPlugin struct {

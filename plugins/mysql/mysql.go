@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/AcalephStorage/telegraf/plugins"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/influxdb/telegraf/plugins"
 )
 
 type Mysql struct {

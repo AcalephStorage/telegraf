@@ -3,13 +3,13 @@ package system
 import (
 	"testing"
 
-	"github.com/influxdb/telegraf/plugins/system/ps/cpu"
-	"github.com/influxdb/telegraf/plugins/system/ps/disk"
-	"github.com/influxdb/telegraf/plugins/system/ps/docker"
-	"github.com/influxdb/telegraf/plugins/system/ps/load"
-	"github.com/influxdb/telegraf/plugins/system/ps/mem"
-	"github.com/influxdb/telegraf/plugins/system/ps/net"
-	"github.com/influxdb/telegraf/testutil"
+	"github.com/AcalephStorage/telegraf/plugins/system/ps/cpu"
+	"github.com/AcalephStorage/telegraf/plugins/system/ps/disk"
+	"github.com/AcalephStorage/telegraf/plugins/system/ps/docker"
+	"github.com/AcalephStorage/telegraf/plugins/system/ps/load"
+	"github.com/AcalephStorage/telegraf/plugins/system/ps/mem"
+	"github.com/AcalephStorage/telegraf/plugins/system/ps/net"
+	"github.com/AcalephStorage/telegraf/testutil"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

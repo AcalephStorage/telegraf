@@ -5,8 +5,8 @@ import (
 	"os/signal"
 	"time"
 
-	"github.com/influxdb/influxdb/tsdb"
-	"github.com/influxdb/telegraf/plugins"
+	"github.com/AcalephStorage/influxdb/tsdb"
+	"github.com/AcalephStorage/telegraf/plugins"
 	"github.com/wvanbergen/kafka/consumergroup"
 	"gopkg.in/Shopify/sarama.v1"
 )

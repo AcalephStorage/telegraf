@@ -3,13 +3,21 @@
 package load
 
 import (
+	"fmt"
 	"io/ioutil"
 	"strconv"
 	"strings"
 )
 
 func LoadAvg() (*LoadAvgStat, error) {
-	filename := "/proc/loadavg"
+	var PROC = "/proc"
+	procDir, err := os.Getenv("PROCDIR")
+
+	if procDir != "" {
+		PROC = procDir
+	}
+
+	filename := fmt.Sprint(PROC, "/loadavg")
 	line, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return nil, err

@@ -4,15 +4,15 @@ import (
 	gonet "net"
 	"strings"
 
+	"github.com/AcalephStorage/telegraf/plugins"
+	"github.com/AcalephStorage/telegraf/plugins/system/ps/common"
+	"github.com/AcalephStorage/telegraf/plugins/system/ps/cpu"
+	"github.com/AcalephStorage/telegraf/plugins/system/ps/disk"
+	"github.com/AcalephStorage/telegraf/plugins/system/ps/docker"
+	"github.com/AcalephStorage/telegraf/plugins/system/ps/load"
+	"github.com/AcalephStorage/telegraf/plugins/system/ps/mem"
+	"github.com/AcalephStorage/telegraf/plugins/system/ps/net"
 	dc "github.com/fsouza/go-dockerclient"
-	"github.com/influxdb/telegraf/plugins"
-	"github.com/influxdb/telegraf/plugins/system/ps/common"
-	"github.com/influxdb/telegraf/plugins/system/ps/cpu"
-	"github.com/influxdb/telegraf/plugins/system/ps/disk"
-	"github.com/influxdb/telegraf/plugins/system/ps/docker"
-	"github.com/influxdb/telegraf/plugins/system/ps/load"
-	"github.com/influxdb/telegraf/plugins/system/ps/mem"
-	"github.com/influxdb/telegraf/plugins/system/ps/net"
 )
 
 type DockerContainerStat struct {

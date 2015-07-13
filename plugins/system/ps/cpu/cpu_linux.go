@@ -4,15 +4,17 @@ package cpu
 
 import (
 	"errors"
+	"fmt"
+	"os"
 	"os/exec"
 	"strconv"
 	"strings"
 
-	common "github.com/influxdb/telegraf/plugins/system/ps/common"
+	common "github.com/AcalephStorage/telegraf/plugins/system/ps/common"
 )
 
 func CPUTimes(percpu bool) ([]CPUTimesStat, error) {
-	filename := "/proc/stat"
+	filename := fmt.Sprint(PROC, "/stat")
 	var lines = []string{}
 	if percpu {
 		var startIdx uint = 1
@@ -43,7 +45,7 @@ func CPUTimes(percpu bool) ([]CPUTimesStat, error) {
 }
 
 func CPUInfo() ([]CPUInfoStat, error) {
-	filename := "/proc/cpuinfo"
+	filename := fmt.Sprint(PROC, "/cpuinfo")
 	lines, _ := common.ReadLines(filename)
 
 	var ret []CPUInfoStat
@@ -112,6 +114,7 @@ func CPUInfo() ([]CPUInfoStat, error) {
 }
 
 var CLK_TCK = 100
+var PROC = "/proc"
 
 func init() {
 	out, err := exec.Command("getconf", "CLK_TCK").CombinedOutput()
@@ -121,6 +124,13 @@ func init() {
 			CLK_TCK = i
 		}
 	}
+
+	procDir, err := os.Getenv("PROCDIR")
+
+	if procDir != "" {
+		PROC = procDir
+	}
+
 }
 
 func parseStatLine(line string) (*CPUTimesStat, error) {

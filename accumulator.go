@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/influxdb/influxdb/client"
+	"github.com/AcalephStorage/influxdb/client"
 )
 
 type BatchPoints struct {

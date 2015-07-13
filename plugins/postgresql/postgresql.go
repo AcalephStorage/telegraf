@@ -3,7 +3,7 @@ package postgresql
 import (
 	"database/sql"
 
-	"github.com/influxdb/telegraf/plugins"
+	"github.com/AcalephStorage/telegraf/plugins"
 
 	_ "github.com/lib/pq"
 )

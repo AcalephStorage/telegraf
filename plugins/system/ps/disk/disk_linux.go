@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	common "github.com/influxdb/telegraf/plugins/system/ps/common"
+	common "github.com/AcalephStorage/telegraf/plugins/system/ps/common"
 )
 
 const (
@@ -42,7 +42,14 @@ func DiskPartitions(all bool) ([]DiskPartitionStat, error) {
 }
 
 func DiskIOCounters() (map[string]DiskIOCountersStat, error) {
-	filename := "/proc/diskstats"
+	var PROC = "/proc"
+	procDir, err := os.Getenv("PROCDIR")
+
+	if procDir != "" {
+		PROC = procDir
+	}
+
+	filename := fmt.Sprint(PROC, "/diskstats")
 	lines, err := common.ReadLines(filename)
 	if err != nil {
 		return nil, err

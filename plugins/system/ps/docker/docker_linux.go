@@ -9,8 +9,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/influxdb/telegraf/plugins/system/ps/common"
-	"github.com/influxdb/telegraf/plugins/system/ps/cpu"
+	"github.com/AcalephStorage/telegraf/plugins/system/ps/common"
+	"github.com/AcalephStorage/telegraf/plugins/system/ps/cpu"
 )
 
 // GetDockerIDList returnes a list of DockerID.

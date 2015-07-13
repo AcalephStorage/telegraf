@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/influxdb/telegraf/plugins"
+	"github.com/AcalephStorage/telegraf/plugins"
 )
 
 // Memcached is a memcached plugin

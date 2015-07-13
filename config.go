@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/influxdb/telegraf/plugins"
+	"github.com/AcalephStorage/telegraf/plugins"
 	"github.com/naoina/toml"
 	"github.com/naoina/toml/ast"
 )

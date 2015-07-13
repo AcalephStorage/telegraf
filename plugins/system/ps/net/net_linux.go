@@ -3,10 +3,11 @@
 package net
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 
-	common "github.com/influxdb/telegraf/plugins/system/ps/common"
+	common "github.com/AcalephStorage/telegraf/plugins/system/ps/common"
 )
 
 // NetIOCounters returnes network I/O statistics for every network
@@ -15,7 +16,14 @@ import (
 // every network interface installed on the system is returned
 // separately.
 func NetIOCounters(pernic bool) ([]NetIOCountersStat, error) {
-	filename := "/proc/net/dev"
+	var PROC = "/proc"
+	procDir, err := os.Getenv("PROCDIR")
+
+	if procDir != "" {
+		PROC = procDir
+	}
+
+	filename := fmt.Sprint(PROC, "/net/dev")
 	lines, err := common.ReadLines(filename)
 	if err != nil {
 		return nil, err

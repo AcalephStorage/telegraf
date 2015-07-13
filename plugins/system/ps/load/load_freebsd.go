@@ -5,7 +5,7 @@ package load
 import (
 	"strconv"
 
-	common "github.com/influxdb/telegraf/plugins/system/ps/common"
+	common "github.com/AcalephStorage/telegraf/plugins/system/ps/common"
 )
 
 func LoadAvg() (*LoadAvgStat, error) {

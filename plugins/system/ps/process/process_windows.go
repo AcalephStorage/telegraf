@@ -11,9 +11,9 @@ import (
 
 	"github.com/shirou/w32"
 
-	common "github.com/influxdb/telegraf/plugins/system/ps/common"
-	cpu "github.com/influxdb/telegraf/plugins/system/ps/cpu"
-	net "github.com/influxdb/telegraf/plugins/system/ps/net"
+	common "github.com/AcalephStorage/telegraf/plugins/system/ps/common"
+	cpu "github.com/AcalephStorage/telegraf/plugins/system/ps/cpu"
+	net "github.com/AcalephStorage/telegraf/plugins/system/ps/net"
 )
 
 const (

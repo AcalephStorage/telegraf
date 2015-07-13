@@ -7,9 +7,9 @@ import (
 	"encoding/binary"
 	"unsafe"
 
-	common "github.com/influxdb/telegraf/plugins/system/ps/common"
-	cpu "github.com/influxdb/telegraf/plugins/system/ps/cpu"
-	net "github.com/influxdb/telegraf/plugins/system/ps/net"
+	common "github.com/AcalephStorage/telegraf/plugins/system/ps/common"
+	cpu "github.com/AcalephStorage/telegraf/plugins/system/ps/cpu"
+	net "github.com/AcalephStorage/telegraf/plugins/system/ps/net"
 )
 
 // MemoryInfoExStat is different between OSes

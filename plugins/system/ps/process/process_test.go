@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/influxdb/telegraf/plugins/system/ps/common"
+	"github.com/AcalephStorage/telegraf/plugins/system/ps/common"
 )
 
 func testGetProcess() Process {

@@ -13,8 +13,9 @@ import (
 	"strings"
 	"syscall"
 	"unsafe"
+	"fmt"
 
-	common "github.com/influxdb/telegraf/plugins/system/ps/common"
+	common "github.com/AcalephStorage/telegraf/plugins/system/ps/common"
 )
 
 type LSB struct {
@@ -280,12 +281,19 @@ func GetVirtualization() (string, string, error) {
 	var system string
 	var role string
 
-	if common.PathExists("/proc/xen") {
+	var PROC = "/proc"
+	procDir, err := os.Getenv("PROCDIR")
+
+	if procDir != "" {
+		PROC = procDir
+	}
+
+	if common.PathExists(fmt.Sprint(PROC,"/xen")) {
 		system = "xen"
 		role = "guest" // assume guest
 
-		if common.PathExists("/proc/xen/capabilities") {
-			contents, err := common.ReadLines("/proc/xen/capabilities")
+		if common.PathExists(fmt.Sprint(PROC,"/xen/capabilities")) {
+			contents, err := common.ReadLines(fmt.Sprint(PROC,"/xen/capabilities"))
 			if err == nil {
 				if common.StringContains(contents, "control_d") {
 					role = "host"
@@ -293,8 +301,8 @@ func GetVirtualization() (string, string, error) {
 			}
 		}
 	}
-	if common.PathExists("/proc/modules") {
-		contents, err := common.ReadLines("/proc/modules")
+	if common.PathExists(fmt.Sprint(PROC,"/modules") {
+		contents, err := common.ReadLines(fmt.Sprint(PROC,"/modules"))
 		if err == nil {
 			if common.StringContains(contents, "kvm") {
 				system = "kvm"
@@ -309,8 +317,8 @@ func GetVirtualization() (string, string, error) {
 		}
 	}
 
-	if common.PathExists("/proc/cpuinfo") {
-		contents, err := common.ReadLines("/proc/cpuinfo")
+	if common.PathExists(fmt.Sprint(PROC,"/cpuinfo")) {
+		contents, err := common.ReadLines(fmt.Sprint(PROC,"/cpuinfo"))
 		if err == nil {
 			if common.StringContains(contents, "QEMU Virtual CPU") ||
 				common.StringContains(contents, "Common KVM processor") ||
@@ -321,18 +329,18 @@ func GetVirtualization() (string, string, error) {
 		}
 	}
 
-	if common.PathExists("/proc/bc/0") {
+	if common.PathExists(fmt.Sprint(PROC,"/bc/0")) {
 		system = "openvz"
 		role = "host"
-	} else if common.PathExists("/proc/vz") {
+	} else if common.PathExists(fmt.Sprint(PROC,"/vz")) {
 		system = "openvz"
 		role = "guest"
 	}
 
 	// not use dmidecode because it requires root
 
-	if common.PathExists("/proc/self/status") {
-		contents, err := common.ReadLines("/proc/self/status")
+	if common.PathExists(fmt.Sprint(PROC,"/self/status")) {
+		contents, err := common.ReadLines(fmt.Sprint(PROC,"/self/status"))
 		if err == nil {
 
 			if common.StringContains(contents, "s_context:") ||
@@ -343,8 +351,8 @@ func GetVirtualization() (string, string, error) {
 		}
 	}
 
-	if common.PathExists("/proc/self/cgroup") {
-		contents, err := common.ReadLines("/proc/self/cgroup")
+	if common.PathExists(fmt.Sprint(PROC,"/self/cgroup")) {
+		contents, err := common.ReadLines(fmt.Sprint(PROC,"/self/cgroup"))
 		if err == nil {
 
 			if common.StringContains(contents, "lxc") ||

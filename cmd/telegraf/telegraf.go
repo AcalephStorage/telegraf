@@ -8,8 +8,8 @@ import (
 	"os/signal"
 	"strings"
 
-	"github.com/influxdb/telegraf"
-	_ "github.com/influxdb/telegraf/plugins/all"
+	"github.com/AcalephStorage/telegraf"
+	_ "github.com/AcalephStorage/telegraf/plugins/all"
 )
 
 var fDebug = flag.Bool("debug", false, "show metrics as they're generated to stdout")

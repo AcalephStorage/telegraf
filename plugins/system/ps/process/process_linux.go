@@ -11,10 +11,10 @@ import (
 	"strings"
 	"syscall"
 
-	common "github.com/influxdb/telegraf/plugins/system/ps/common"
-	cpu "github.com/influxdb/telegraf/plugins/system/ps/cpu"
-	host "github.com/influxdb/telegraf/plugins/system/ps/host"
-	net "github.com/influxdb/telegraf/plugins/system/ps/net"
+	common "github.com/AcalephStorage/telegraf/plugins/system/ps/common"
+	cpu "github.com/AcalephStorage/telegraf/plugins/system/ps/cpu"
+	host "github.com/AcalephStorage/telegraf/plugins/system/ps/host"
+	net "github.com/AcalephStorage/telegraf/plugins/system/ps/net"
 )
 
 const (
@@ -183,9 +183,17 @@ func (p *Process) IsRunning() (bool, error) {
 
 // MemoryMaps get memory maps from /proc/(pid)/smaps
 func (p *Process) MemoryMaps(grouped bool) (*[]MemoryMapsStat, error) {
+	var PROC = "/proc"
+	procDir, err := os.Getenv("PROCDIR")
+
+	if procDir != "" {
+		PROC = procDir
+	}
+
 	pid := p.Pid
 	var ret []MemoryMapsStat
-	smapsPath := filepath.Join("/", "proc", strconv.Itoa(int(pid)), "smaps")
+
+	smapsPath := filepath.Join(PROC, strconv.Itoa(int(pid)), "smaps")
 	contents, err := ioutil.ReadFile(smapsPath)
 	if err != nil {
 		return nil, err
@@ -265,8 +273,15 @@ func (p *Process) MemoryMaps(grouped bool) (*[]MemoryMapsStat, error) {
 
 // Get num_fds from /proc/(pid)/fd
 func (p *Process) fillFromfd() (int32, []*OpenFilesStat, error) {
+	var PROC = "/proc"
+	procDir, err := os.Getenv("PROCDIR")
+
+	if procDir != "" {
+		PROC = procDir
+	}
+
 	pid := p.Pid
-	statPath := filepath.Join("/", "proc", strconv.Itoa(int(pid)), "fd")
+	statPath := filepath.Join(PROC, strconv.Itoa(int(pid)), "fd")
 	d, err := os.Open(statPath)
 	if err != nil {
 		return 0, nil, err
@@ -298,8 +313,15 @@ func (p *Process) fillFromfd() (int32, []*OpenFilesStat, error) {
 
 // Get cwd from /proc/(pid)/cwd
 func (p *Process) fillFromCwd() (string, error) {
+	var PROC = "/proc"
+	procDir, err := os.Getenv("PROCDIR")
+
+	if procDir != "" {
+		PROC = procDir
+	}
+
 	pid := p.Pid
-	cwdPath := filepath.Join("/", "proc", strconv.Itoa(int(pid)), "cwd")
+	cwdPath := filepath.Join(PROC, strconv.Itoa(int(pid)), "cwd")
 	cwd, err := os.Readlink(cwdPath)
 	if err != nil {
 		return "", err
@@ -309,8 +331,15 @@ func (p *Process) fillFromCwd() (string, error) {
 
 // Get exe from /proc/(pid)/exe
 func (p *Process) fillFromExe() (string, error) {
+	var PROC = "/proc"
+	procDir, err := os.Getenv("PROCDIR")
+
+	if procDir != "" {
+		PROC = procDir
+	}
+
 	pid := p.Pid
-	exePath := filepath.Join("/", "proc", strconv.Itoa(int(pid)), "exe")
+	exePath := filepath.Join(PROC, strconv.Itoa(int(pid)), "exe")
 	exe, err := os.Readlink(exePath)
 	if err != nil {
 		return "", err
@@ -320,8 +349,15 @@ func (p *Process) fillFromExe() (string, error) {
 
 // Get cmdline from /proc/(pid)/cmdline
 func (p *Process) fillFromCmdline() (string, error) {
+	var PROC = "/proc"
+	procDir, err := os.Getenv("PROCDIR")
+
+	if procDir != "" {
+		PROC = procDir
+	}
+
 	pid := p.Pid
-	cmdPath := filepath.Join("/", "proc", strconv.Itoa(int(pid)), "cmdline")
+	cmdPath := filepath.Join(PROC, strconv.Itoa(int(pid)), "cmdline")
 	cmdline, err := ioutil.ReadFile(cmdPath)
 	if err != nil {
 		return "", err
@@ -338,8 +374,15 @@ func (p *Process) fillFromCmdline() (string, error) {
 
 // Get IO status from /proc/(pid)/io
 func (p *Process) fillFromIO() (*IOCountersStat, error) {
+	var PROC = "/proc"
+	procDir, err := os.Getenv("PROCDIR")
+
+	if procDir != "" {
+		PROC = procDir
+	}
+
 	pid := p.Pid
-	ioPath := filepath.Join("/", "proc", strconv.Itoa(int(pid)), "io")
+	ioPath := filepath.Join(PROC, strconv.Itoa(int(pid)), "io")
 	ioline, err := ioutil.ReadFile(ioPath)
 	if err != nil {
 		return nil, err
@@ -377,8 +420,15 @@ func (p *Process) fillFromIO() (*IOCountersStat, error) {
 
 // Get memory info from /proc/(pid)/statm
 func (p *Process) fillFromStatm() (*MemoryInfoStat, *MemoryInfoExStat, error) {
+	var PROC = "/proc"
+	procDir, err := os.Getenv("PROCDIR")
+
+	if procDir != "" {
+		PROC = procDir
+	}
+
 	pid := p.Pid
-	memPath := filepath.Join("/", "proc", strconv.Itoa(int(pid)), "statm")
+	memPath := filepath.Join(PROC, strconv.Itoa(int(pid)), "statm")
 	contents, err := ioutil.ReadFile(memPath)
 	if err != nil {
 		return nil, nil, err
@@ -429,8 +479,15 @@ func (p *Process) fillFromStatm() (*MemoryInfoStat, *MemoryInfoExStat, error) {
 
 // Get various status from /proc/(pid)/status
 func (p *Process) fillFromStatus() error {
+	var PROC = "/proc"
+	procDir, err := os.Getenv("PROCDIR")
+
+	if procDir != "" {
+		PROC = procDir
+	}
+
 	pid := p.Pid
-	statPath := filepath.Join("/", "proc", strconv.Itoa(int(pid)), "status")
+	statPath := filepath.Join(PROC, strconv.Itoa(int(pid)), "status")
 	contents, err := ioutil.ReadFile(statPath)
 	if err != nil {
 		return err
@@ -516,8 +573,15 @@ func (p *Process) fillFromStatus() error {
 }
 
 func (p *Process) fillFromStat() (string, int32, *cpu.CPUTimesStat, int64, int32, error) {
+	var PROC = "/proc"
+	procDir, err := os.Getenv("PROCDIR")
+
+	if procDir != "" {
+		PROC = procDir
+	}
+
 	pid := p.Pid
-	statPath := filepath.Join("/", "proc", strconv.Itoa(int(pid)), "stat")
+	statPath := filepath.Join(PROC, strconv.Itoa(int(pid)), "stat")
 	contents, err := ioutil.ReadFile(statPath)
 	if err != nil {
 		return "", 0, nil, 0, 0, err
@@ -572,9 +636,16 @@ func (p *Process) fillFromStat() (string, int32, *cpu.CPUTimesStat, int64, int32
 }
 
 func Pids() ([]int32, error) {
+	var PROC = "/proc"
+	procDir, err := os.Getenv("PROCDIR")
+
+	if procDir != "" {
+		PROC = procDir
+	}
+
 	var ret []int32
 
-	d, err := os.Open("/proc")
+	d, err := os.Open(PROC)
 	if err != nil {
 		return nil, err
 	}

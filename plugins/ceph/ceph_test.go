@@ -1,7 +1,7 @@
 package ceph
 
 import (
-	"github.com/influxdb/telegraf/testutil"
+	"github.com/AcalephStorage/telegraf/testutil"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"

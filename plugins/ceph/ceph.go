@@ -3,7 +3,8 @@ package ceph
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/influxdb/telegraf/plugins"
+
+	"github.com/AcalephStorage/telegraf/plugins"
 	"io/ioutil"
 	"os"
 	"os/exec"

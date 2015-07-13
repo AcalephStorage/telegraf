@@ -3,15 +3,23 @@
 package mem
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 	"syscall"
 
-	common "github.com/influxdb/telegraf/plugins/system/ps/common"
+	common "github.com/AcalephStorage/telegraf/plugins/system/ps/common"
 )
 
 func VirtualMemory() (*VirtualMemoryStat, error) {
-	filename := "/proc/meminfo"
+	var PROC = "/proc"
+	procDir, err := os.Getenv("PROCDIR")
+
+	if procDir != "" {
+		PROC = procDir
+	}
+
+	filename := fmt.Sprint(PROC, "/meminfo")
 	lines, _ := common.ReadLines(filename)
 
 	ret := &VirtualMemoryStat{}
@@ -51,6 +59,13 @@ func VirtualMemory() (*VirtualMemoryStat, error) {
 }
 
 func SwapMemory() (*SwapMemoryStat, error) {
+	var PROC = "/proc"
+	procDir, err := os.Getenv("PROCDIR")
+
+	if procDir != "" {
+		PROC = procDir
+	}
+
 	sysinfo := &syscall.Sysinfo_t{}
 
 	if err := syscall.Sysinfo(sysinfo); err != nil {
@@ -67,7 +82,7 @@ func SwapMemory() (*SwapMemoryStat, error) {
 	} else {
 		ret.UsedPercent = 0
 	}
-	lines, _ := common.ReadLines("/proc/vmstat")
+	lines, _ := common.ReadLines(fmt.Sprint(PROC, "/vmstat"))
 	for _, l := range lines {
 		fields := strings.Fields(l)
 		if len(fields) < 2 {
